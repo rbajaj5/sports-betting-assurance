@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "betguard"
-version = "0.1.0"
+version = "0.2.0"
 description = "Conditioning-aware assurance checks for sports-betting models and portfolios"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -48,4 +48,3 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
-
