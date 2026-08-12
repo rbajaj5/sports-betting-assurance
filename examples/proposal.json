@@ -1,0 +1,23 @@
+{
+  "proposal": {
+    "name": "Synthetic basketball total over",
+    "model_probability": 0.56,
+    "decimal_odds": 1.91,
+    "probability_uncertainty": 0.02,
+    "requested_stake_fraction": 0.008,
+    "factor_loadings": {
+      "team_offense": 1.0,
+      "game_pace": 0.7
+    }
+  },
+  "current_factor_exposure": {
+    "team_offense": 0.007,
+    "game_pace": 0.004
+  },
+  "config": {
+    "min_conservative_edge": 0.01,
+    "max_factor_exposure": 0.012,
+    "max_stake_fraction": 0.01
+  }
+}
+
