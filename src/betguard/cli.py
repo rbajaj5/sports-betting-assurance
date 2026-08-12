@@ -14,6 +14,15 @@ from betguard.assurance import BetProposal, GateConfig, evaluate_proposal
 from betguard.conditioning import analyze_design_matrix
 from betguard.demo import run_demo
 from betguard.formation import FormationThresholds, fit_affine_formation
+from betguard.simulation import (
+    PaperOutcome,
+    add_paper_trade,
+    analyze_paper_trades,
+    load_paper_ledger,
+    paper_trade_from_gate,
+    save_paper_ledger,
+    settle_paper_trade,
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -39,6 +48,30 @@ def build_parser() -> argparse.ArgumentParser:
 
     evaluate_parser = subparsers.add_parser("evaluate", help="evaluate a proposal from a JSON file")
     evaluate_parser.add_argument("json_path", type=Path)
+
+    place_parser = subparsers.add_parser(
+        "paper-place",
+        help="gate and record a hypothetical trade; never places a real wager",
+    )
+    place_parser.add_argument("json_path", type=Path)
+    place_parser.add_argument("ledger_path", type=Path)
+
+    settle_parser = subparsers.add_parser(
+        "paper-settle", help="settle a hypothetical trade in a paper ledger"
+    )
+    settle_parser.add_argument("ledger_path", type=Path)
+    settle_parser.add_argument("trade_id")
+    settle_parser.add_argument(
+        "outcome",
+        choices=[item.value for item in PaperOutcome if item is not PaperOutcome.OPEN],
+    )
+    settle_parser.add_argument("--settled-at", required=True)
+    settle_parser.add_argument("--closing-decimal-odds", type=float)
+
+    report_parser = subparsers.add_parser(
+        "paper-report", help="summarize a hypothetical paper-trading ledger"
+    )
+    report_parser.add_argument("ledger_path", type=Path)
 
     formation_parser = subparsers.add_parser(
         "check-formation", help="fit one observed basketball formation to a reference"
@@ -73,6 +106,43 @@ def main(argv: list[str] | None = None) -> int:
         result = _evaluate_payload(payload)
         print(json.dumps(result.to_dict(), indent=2))
         return 0 if result.approved_stake_fraction > 0 else 2
+    if args.command == "paper-place":
+        payload = json.loads(args.json_path.read_text(encoding="utf-8"))
+        result = _evaluate_payload(payload)
+        output: dict[str, Any] = {
+            "mode": "paper_only",
+            "recorded": False,
+            "assurance": result.to_dict(),
+        }
+        if result.approved_stake_fraction <= 0:
+            print(json.dumps(output, indent=2))
+            return 2
+        proposal = BetProposal(**dict(payload["proposal"]))
+        trade = paper_trade_from_gate(proposal, result, dict(payload["simulation"]))
+        trades = add_paper_trade(load_paper_ledger(args.ledger_path), trade)
+        save_paper_ledger(args.ledger_path, trades)
+        output["recorded"] = True
+        output["trade"] = trade.to_dict()
+        print(json.dumps(output, indent=2))
+        return 0
+    if args.command == "paper-settle":
+        outcome = PaperOutcome(args.outcome)
+        if outcome is PaperOutcome.OPEN:
+            raise ValueError("paper-settle outcome cannot be open")
+        trades = settle_paper_trade(
+            load_paper_ledger(args.ledger_path),
+            args.trade_id,
+            outcome,
+            settled_at=args.settled_at,
+            closing_decimal_odds=args.closing_decimal_odds,
+        )
+        save_paper_ledger(args.ledger_path, trades)
+        print(json.dumps(analyze_paper_trades(trades).to_dict(), indent=2))
+        return 0
+    if args.command == "paper-report":
+        trades = load_paper_ledger(args.ledger_path)
+        print(json.dumps(analyze_paper_trades(trades).to_dict(), indent=2))
+        return 0
     if args.command == "check-formation":
         reference = _read_positions_json(args.reference_json)
         observed = _read_positions_json(args.observed_json)

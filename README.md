@@ -34,8 +34,9 @@ odds + data -> predictive model -> proposed probability/stake
    conservative edge, uncertainty, lineup status, distribution shift, feature
    conditioning, fractional Kelly, and factor-exposure caps.
 
-BetGuard does **not** scrape odds, predict games, recommend sportsbooks, or
-promise profitability. The included basketball example is synthetic.
+BetGuard does **not** scrape odds, predict games, recommend sportsbooks, place
+real wagers, or promise profitability. The included basketball examples are
+synthetic. Its trading workflow is deliberately paper-only.
 
 ## Install
 
@@ -120,6 +121,31 @@ The JSON format is intentionally explicit:
 ```
 
 Stake fractions are proportions of bankroll: `0.005` means 0.5%.
+
+## Run a paper-trading ledger
+
+Gate a hypothetical position and record it only when approved:
+
+```bash
+betguard paper-place examples/paper_proposal.json data/paper_trades.json
+```
+
+Settle it after the event, including a closing price when available:
+
+```bash
+betguard paper-settle data/paper_trades.json synthetic-alpha-beta-20260812 \
+  win --settled-at 2026-08-13T01:30:00Z --closing-decimal-odds 1.84
+```
+
+Summarize record, paper ROI, closing-line value, Brier score, and drawdown:
+
+```bash
+betguard paper-report data/paper_trades.json
+```
+
+The ledger uses abstract units rather than currency and cannot connect to a
+sportsbook or execute a bet. See [docs/paper-trading.md](docs/paper-trading.md)
+for the schema, workflow, and metric definitions.
 
 ## Framework
 

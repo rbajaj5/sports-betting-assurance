@@ -24,6 +24,17 @@ from betguard.portfolio import (
     fractional_kelly_binary,
     shrink_covariance,
 )
+from betguard.simulation import (
+    PaperLedgerReport,
+    PaperOutcome,
+    PaperTrade,
+    add_paper_trade,
+    analyze_paper_trades,
+    load_paper_ledger,
+    paper_trade_from_gate,
+    save_paper_ledger,
+    settle_paper_trade,
+)
 
 __all__ = [
     "BetProposal",
@@ -34,17 +45,26 @@ __all__ = [
     "GateConfig",
     "GateDecision",
     "GateResult",
+    "PaperLedgerReport",
+    "PaperOutcome",
+    "PaperTrade",
     "PortfolioConditioningReport",
     "analyze_covariance",
     "analyze_design_matrix",
     "analyze_formation_sequence",
+    "analyze_paper_trades",
+    "add_paper_trade",
     "basketball_templates",
     "effective_number_of_bets",
     "evaluate_proposal",
     "fit_affine_formation",
     "fit_best_template",
     "fractional_kelly_binary",
+    "load_paper_ledger",
+    "paper_trade_from_gate",
+    "save_paper_ledger",
+    "settle_paper_trade",
     "shrink_covariance",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
