@@ -23,6 +23,12 @@ from betguard.simulation import (
     save_paper_ledger,
     settle_paper_trade,
 )
+from betguard.video_pricing import (
+    ControlledFormationThresholds,
+    VideoPricingCalibration,
+    analyze_team_payload,
+    price_game_from_video,
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -83,6 +89,12 @@ def build_parser() -> argparse.ArgumentParser:
     formation_parser.add_argument("--max-condition-number", type=float, default=6.0)
     formation_parser.add_argument("--min-area-scale", type=float, default=0.15)
     formation_parser.add_argument("--min-spacing", type=float, default=3.0)
+
+    video_parser = subparsers.add_parser(
+        "video-price",
+        help="price a simulated moneyline from audited, annotated video coordinates",
+    )
+    video_parser.add_argument("json_path", type=Path)
     return parser
 
 
@@ -160,6 +172,30 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(json.dumps(result.to_dict(), indent=2))
         return 2 if result.collapsed else 0
+    if args.command == "video-price":
+        payload = json.loads(args.json_path.read_text(encoding="utf-8"))
+        thresholds = ControlledFormationThresholds(**payload.get("thresholds", {}))
+        calibration = VideoPricingCalibration(**payload.get("calibration", {}))
+        home = analyze_team_payload(payload["home"], thresholds)
+        away = analyze_team_payload(payload["away"], thresholds)
+        market = payload["market"]
+        price = price_game_from_video(
+            home,
+            away,
+            baseline_home_probability=float(payload["baseline_home_probability"]),
+            market_home_decimal_odds=float(market["home_decimal_odds"]),
+            market_away_decimal_odds=float(market["away_decimal_odds"]),
+            calibration=calibration,
+            min_conservative_edge=float(payload.get("min_conservative_edge", 0.03)),
+        )
+        output = {
+            "game": payload.get("game", "unspecified simulation"),
+            "home_formation": home.to_dict(include_frames=False),
+            "away_formation": away.to_dict(include_frames=False),
+            "price": price.to_dict(),
+        }
+        print(json.dumps(output, indent=2))
+        return 0
     raise AssertionError(f"unsupported command: {args.command}")
 
 

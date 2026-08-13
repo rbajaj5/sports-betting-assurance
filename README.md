@@ -33,6 +33,9 @@ odds + data -> predictive model -> proposed probability/stake
 4. **Decision assurance** — accepts, reduces, or rejects a proposed wager using
    conservative edge, uncertainty, lineup status, distribution shift, feature
    conditioning, fractional Kelly, and factor-exposure caps.
+5. **Video formation pricing** — treats the top three pregame impact players as
+   affine leaders, holds the last well-conditioned map during collapse, and
+   produces auditable simulation-only moneyline prices from annotated footage.
 
 BetGuard does **not** scrape odds, predict games, recommend sportsbooks, place
 real wagers, or promise profitability. The included basketball examples are
@@ -85,6 +88,28 @@ toward one line—the failure illustrated by the source animation.
 See [docs/basketball-formations.md](docs/basketball-formations.md) for the
 coordinate model and a careful path from possession-level spatial features to
 betting inputs.
+
+## Price a game from annotated video
+
+```bash
+betguard video-price examples/video_price_synthetic.json
+```
+
+This command does not infer trustworthy player positions directly from an
+arbitrary broadcast. It requires stable player IDs, court-calibrated
+coordinates, permitted clip provenance, and explicit player impact ratings. The
+three highest-rated players become formation leaders. If their normalized
+affine conditioning falls below `0.12`, the monitor holds the last safe map and
+measures follower deviation.
+
+The supplied 4,096-episode GPU comparison motivates this assurance endpoint but
+is not basketball evidence and is not independently reproduced here. BetGuard
+transfers the structural failure test, not the experiment's outcome counts.
+
+The bundled calibration is deliberately illustrative, so its output is a
+scenario rather than a qualified paper candidate. See
+[docs/video-formation-pricing.md](docs/video-formation-pricing.md) for the input
+schema, evidence gates, pricing equation, and footage-use restrictions.
 
 To see the redundant-feature failure:
 
