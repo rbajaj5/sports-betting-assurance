@@ -1,0 +1,194 @@
+{
+  "simulation_version": "2.0.0",
+  "creation_timestamp_utc": "2026-08-13T04:20:48Z",
+  "random_seed": 20260813,
+  "episodes_per_arm": 4096,
+  "frame_rate_fps": 15,
+  "video_duration_seconds": 20.0,
+  "video_frames": 300,
+  "telemetry_rows": 24576000,
+  "coordinate_convention": {
+    "units": "feet",
+    "basket_center": [
+      0.0,
+      0.0
+    ],
+    "x_axis": "sideline-to-sideline; negative left, positive right when facing half court",
+    "y_axis": "distance from baseline toward half court",
+    "half_court_width_feet": 50.0,
+    "half_court_length_feet": 47.0
+  },
+  "thresholds": {
+    "normalized_conditioning_reject_below": 0.12,
+    "normalized_conditioning_resume_at_or_above": 0.15,
+    "tracking_rmse_pass_at_or_below_feet": 1.0,
+    "minimum_spacing_pass_at_or_above_feet": 2.0
+  },
+  "player_impact_ratings": {
+    "PG01": 10.0,
+    "WG01": 8.5,
+    "C01": 8.0,
+    "WG02": 6.5,
+    "WG03": 6.0,
+    "DPG01": 7.8,
+    "DWG01": 7.4,
+    "DC01": 8.2,
+    "DWG02": 6.9,
+    "DWG03": 6.6
+  },
+  "leader_identities": [
+    "PG01",
+    "WG01",
+    "C01"
+  ],
+  "results_by_controller_arm": {
+    "tracking_and_separation": {
+      "rank_loss": {
+        "affected_frames": 134631,
+        "affected_episodes": 2928,
+        "episode_rate": 0.71484375,
+        "episode_rate_wilson_95_ci": [
+          0.7008208680334773,
+          0.7284640244867955
+        ]
+      },
+      "hidden_collapse": {
+        "affected_frames": 134631,
+        "affected_episodes": 2928,
+        "episode_rate": 0.71484375,
+        "episode_rate_wilson_95_ci": [
+          0.7008208680334773,
+          0.7284640244867955
+        ]
+      },
+      "decision_frame_counts": {
+        "accepted": 1142439,
+        "rejected": 34566,
+        "held": 51795
+      },
+      "conditioning": {
+        "mean": 0.6441819071769714,
+        "median": 0.8184067010879517
+      },
+      "follower_rmse_feet": {
+        "mean": 0.5126819014549255,
+        "median": 0.403497576713562
+      }
+    },
+    "conditioning_aware_rta": {
+      "rank_loss": {
+        "affected_frames": 104,
+        "affected_episodes": 10,
+        "episode_rate": 0.00244140625,
+        "episode_rate_wilson_95_ci": [
+          0.0013266895763215114,
+          0.004488525246046777
+        ]
+      },
+      "hidden_collapse": {
+        "affected_frames": 104,
+        "affected_episodes": 10,
+        "episode_rate": 0.00244140625,
+        "episode_rate_wilson_95_ci": [
+          0.0013266895763215114,
+          0.004488525246046777
+        ]
+      },
+      "decision_frame_counts": {
+        "accepted": 954709,
+        "rejected": 61176,
+        "held": 212915
+      },
+      "conditioning": {
+        "mean": 0.6098089814186096,
+        "median": 0.6365578174591064
+      },
+      "follower_rmse_feet": {
+        "mean": 0.5805304050445557,
+        "median": 0.39880120754241943
+      }
+    }
+  },
+  "representative_episode": {
+    "episode_index": 516,
+    "episode_id": "BBAFF-E0516",
+    "episode_seed": 20781457
+  },
+  "validation_results": {
+    "hidden_collapse_episodes_subset_of_rank_loss": {
+      "passed": true
+    },
+    "hidden_collapse_frames_subset_of_rank_loss": {
+      "passed": true
+    },
+    "exactly_three_offensive_leaders": {
+      "passed": true,
+      "leader_ids": [
+        "PG01",
+        "WG01",
+        "C01"
+      ]
+    },
+    "leader_identities_fixed_within_possessions": {
+      "passed": true
+    },
+    "follower_weights_fixed_within_possessions": {
+      "passed": true,
+      "weight_rows": [
+        [
+          -1.2999999523162842,
+          1.75,
+          0.550000011920929
+        ],
+        [
+          -1.2999999523162842,
+          0.5500001311302185,
+          1.7500001192092896
+        ]
+      ]
+    },
+    "timestamps_align_with_video_frames": {
+      "passed": true,
+      "frames": 300,
+      "fps": 15
+    },
+    "no_nan_or_infinite_coordinates": {
+      "passed": true
+    },
+    "telemetry_render_recovery": {
+      "passed": true,
+      "mode": "reuse_completed_csv_after_render_stage_interruption",
+      "terminal_sentinel_checked": true
+    },
+    "video_render_recovery": {
+      "passed": true,
+      "mode": "reuse_verified_300_frame_encode_after_memory_pressure"
+    },
+    "mp4_frame_alignment": {
+      "passed": true,
+      "video_frames": 300,
+      "telemetry_frames_per_episode_arm": 300
+    },
+    "generated_telemetry_reconciliation": {
+      "passed": true,
+      "artifact": "basketball_affine_csv_verification.json",
+      "all_csv_rows": 24576000,
+      "numeric_tolerance": 1e-06
+    }
+  },
+  "video_provenance": {
+    "source_uri": "synthetic://basketball-affine-conditioning-v2",
+    "rights_basis": "synthetic",
+    "annotation_method": "direct simulation-state export",
+    "identities_verified": true,
+    "court_calibration_rmse_feet": 0.0
+  },
+  "sha256": {
+    "mp4": "c86c51135fb4de18fc998d08c2332ca70c378447d243a85435802516d7fb5003",
+    "telemetry_csv": "c841439675307d0623a0847ab8dcebd650373316b49339043e4304008933656f",
+    "configuration_json": "9780975b39da3732419c53e8f8dd8b4176607739e523352612bd7acd426e88ed",
+    "pricing_example_json": "235bf63ec56d6d1aaebf20bb6a8309c12a4c17393a06b84ad957b63971934152",
+    "csv_verification_json": "22f786a7729ab97af9fdf8b2a809b7e2dcb3223c49d64d2e0ab3ecd66ba0ff70"
+  },
+  "scope": "Illustrative synthetic simulation only. Not actual basketball evidence, a validated betting model, or proof of profitability."
+}

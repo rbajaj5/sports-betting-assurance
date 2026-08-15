@@ -1,0 +1,240 @@
+{
+  "simulation_version": "2.0.0",
+  "creation_timestamp_utc": "2026-08-13T04:20:48Z",
+  "source_uri": "synthetic://basketball-affine-conditioning-v2",
+  "random_seed": 20260813,
+  "episodes_per_arm": 4096,
+  "controller_arms": [
+    "tracking_and_separation",
+    "conditioning_aware_rta"
+  ],
+  "coordinate_convention": {
+    "units": "feet",
+    "basket_center": [
+      0.0,
+      0.0
+    ],
+    "x_axis": "sideline-to-sideline; negative left, positive right when facing half court",
+    "y_axis": "distance from baseline toward half court",
+    "half_court_width_feet": 50.0,
+    "half_court_length_feet": 47.0
+  },
+  "thresholds": {
+    "normalized_conditioning_reject_below": 0.12,
+    "normalized_conditioning_resume_at_or_above": 0.15,
+    "tracking_rmse_pass_at_or_below_feet": 1.0,
+    "minimum_spacing_pass_at_or_above_feet": 2.0
+  },
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 15,
+    "frames": 300,
+    "duration_seconds": 20.0
+  },
+  "leader_selection": {
+    "method": "descending sort of explicit pre-simulation offensive impact ratings",
+    "leader_ids": [
+      "PG01",
+      "WG01",
+      "C01"
+    ],
+    "selection_frozen_before_simulation": true
+  },
+  "players": [
+    {
+      "player_id": "PG01",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "point_guard",
+      "impact_rating": 10.0,
+      "leader_or_follower": "L1",
+      "design_reference_position_feet": [
+        0.0,
+        33.0
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "WG01",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "primary_wing",
+      "impact_rating": 8.5,
+      "leader_or_follower": "L2",
+      "design_reference_position_feet": [
+        -15.0,
+        23.0
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "C01",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "center",
+      "impact_rating": 8.0,
+      "leader_or_follower": "L3",
+      "design_reference_position_feet": [
+        15.0,
+        23.0
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "WG02",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "weak_side_wing",
+      "impact_rating": 6.5,
+      "leader_or_follower": "F1",
+      "design_reference_position_feet": [
+        -18.0,
+        10.0
+      ],
+      "follower_weights_by_leader": {
+        "PG01": -1.2999999523162842,
+        "WG01": 1.75,
+        "C01": 0.550000011920929
+      }
+    },
+    {
+      "player_id": "WG03",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "corner_wing",
+      "impact_rating": 6.0,
+      "leader_or_follower": "F2",
+      "design_reference_position_feet": [
+        18.0,
+        10.0
+      ],
+      "follower_weights_by_leader": {
+        "PG01": -1.2999999523162842,
+        "WG01": 0.5500001311302185,
+        "C01": 1.7500001192092896
+      }
+    },
+    {
+      "player_id": "DPG01",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "point_of_attack_defender",
+      "impact_rating": 7.8,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        0.0,
+        30.0
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "DWG01",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "wing_defender",
+      "impact_rating": 7.4,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        -13.238309860229492,
+        20.567310333251953
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "DC01",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "rim_defender",
+      "impact_rating": 8.2,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        13.544341087341309,
+        20.367725372314453
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "DWG02",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "help_wing",
+      "impact_rating": 6.9,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        -15.290522575378418,
+        8.699681282043457
+      ],
+      "follower_weights_by_leader": null
+    },
+    {
+      "player_id": "DWG03",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "corner_defender",
+      "impact_rating": 6.6,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        15.401010513305664,
+        8.50080394744873
+      ],
+      "follower_weights_by_leader": null
+    }
+  ],
+  "phases": [
+    {
+      "first_frame": 0,
+      "last_frame": 39,
+      "phase_id": "PHASE_01_HEALTHY_FIVE_OUT",
+      "name": "healthy five-out"
+    },
+    {
+      "first_frame": 40,
+      "last_frame": 104,
+      "phase_id": "PHASE_02_HORNS_HIGH_PNR",
+      "name": "horns/high pick-and-roll"
+    },
+    {
+      "first_frame": 105,
+      "last_frame": 193,
+      "phase_id": "PHASE_03_PROGRESSIVE_COMPRESSION",
+      "name": "progressive compression"
+    },
+    {
+      "first_frame": 194,
+      "last_frame": 234,
+      "phase_id": "PHASE_04_HIDDEN_COLLAPSE_INTERVAL",
+      "name": "hidden-collapse interval"
+    },
+    {
+      "first_frame": 235,
+      "last_frame": 284,
+      "phase_id": "PHASE_05_RECOVERY",
+      "name": "recovery"
+    },
+    {
+      "first_frame": 285,
+      "last_frame": 299,
+      "phase_id": "PHASE_06_HEALTHY_RESET",
+      "name": "healthy reset"
+    }
+  ],
+  "event_definitions": {
+    "rank_loss": "realized controlled normalized_conditioning < 0.12",
+    "hidden_collapse": "rank_loss AND tracking_gate_passed AND separation_gate_passed AND controller_decision == ACCEPT",
+    "conditioning_gate_passed": "proposed-map normalized conditioning >= 0.12"
+  },
+  "matching": "Episode seed, command map, disturbance, tracking noise, defenders, ball, and possession transitions are identical between arms.",
+  "video_provenance": {
+    "source_uri": "synthetic://basketball-affine-conditioning-v2",
+    "rights_basis": "synthetic",
+    "annotation_method": "direct simulation-state export",
+    "identities_verified": true,
+    "court_calibration_rmse_feet": 0.0
+  },
+  "gpu": {
+    "device": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+    "torch_version": "2.12.0.dev20260408+cu128",
+    "batch_seconds": 28.878725999966264
+  }
+}

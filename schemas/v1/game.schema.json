@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://betguard.example/schemas/v1/game.schema.json",
+  "title": "BetGuard WNBA game",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "league", "season", "game_id", "scheduled_start_time", "scheduled_timezone", "home_team_id", "away_team_id", "home_final_score", "away_final_score", "result", "official_source_url", "retrieval_timestamp"],
+  "properties": {
+    "schema_version": {"const": "betguard-historical-v1"},
+    "league": {"const": "WNBA"},
+    "season": {"type": "string", "minLength": 1},
+    "game_id": {"$ref": "#/$defs/stable_id"},
+    "scheduled_start_time": {"type": "string", "format": "date-time"},
+    "scheduled_timezone": {"type": "string", "minLength": 1},
+    "home_team_id": {"$ref": "#/$defs/stable_id"},
+    "away_team_id": {"$ref": "#/$defs/stable_id"},
+    "home_final_score": {"type": ["integer", "null"], "minimum": 0},
+    "away_final_score": {"type": ["integer", "null"], "minimum": 0},
+    "result": {"type": ["string", "null"]},
+    "official_source_url": {"type": "string", "format": "uri"},
+    "retrieval_timestamp": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {"stable_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$"}}
+}

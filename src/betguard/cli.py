@@ -10,10 +10,22 @@ from typing import Any
 
 import numpy as np
 
+from betguard.artifact import (
+    artifact_price_report,
+    import_artifact,
+    verify_artifact_directory,
+    write_json,
+)
 from betguard.assurance import BetProposal, GateConfig, evaluate_proposal
 from betguard.conditioning import analyze_design_matrix
 from betguard.demo import run_demo
 from betguard.formation import FormationThresholds, fit_affine_formation
+from betguard.historical import (
+    RECORD_TYPES,
+    UserExportProvider,
+    data_gap_report,
+    import_historical_export,
+)
 from betguard.simulation import (
     PaperOutcome,
     add_paper_trade,
@@ -22,6 +34,12 @@ from betguard.simulation import (
     paper_trade_from_gate,
     save_paper_ledger,
     settle_paper_trade,
+)
+from betguard.video_pricing import (
+    ControlledFormationThresholds,
+    VideoPricingCalibration,
+    analyze_team_payload,
+    price_game_from_video,
 )
 
 
@@ -83,6 +101,57 @@ def build_parser() -> argparse.ArgumentParser:
     formation_parser.add_argument("--max-condition-number", type=float, default=6.0)
     formation_parser.add_argument("--min-area-scale", type=float, default=0.15)
     formation_parser.add_argument("--min-spacing", type=float, default=3.0)
+
+    video_parser = subparsers.add_parser(
+        "video-price",
+        help="price a simulated moneyline from audited, annotated video coordinates",
+    )
+    video_parser.add_argument("json_path", type=Path)
+
+    artifact_import = subparsers.add_parser(
+        "artifact-import",
+        help="import a basketball affine-conditioning artifact directory",
+    )
+    artifact_import.add_argument("artifact_directory", type=Path)
+    artifact_import.add_argument("--output", type=Path, required=True)
+    artifact_import.add_argument(
+        "--demo-two-possessions",
+        action="store_true",
+        help="exercise the two-possession fixture; never grants production qualification",
+    )
+
+    artifact_verify = subparsers.add_parser(
+        "artifact-verify",
+        help="verify compact hashes or stream the full telemetry CSV",
+    )
+    artifact_verify.add_argument("artifact_directory", type=Path)
+    artifact_verify.add_argument("--stream-telemetry", action="store_true")
+    artifact_verify.add_argument("--verify-large-hashes", action="store_true")
+
+    artifact_price = subparsers.add_parser(
+        "artifact-price",
+        help="audit the artifact's synthetic scenario without treating arms as teams",
+    )
+    artifact_price.add_argument("artifact_directory", type=Path)
+    artifact_price.add_argument("--home-decimal-odds", type=float)
+    artifact_price.add_argument("--away-decimal-odds", type=float)
+    artifact_price.add_argument("--output", type=Path)
+    artifact_price.add_argument("--demo-two-possessions", action="store_true")
+
+    historical_import = subparsers.add_parser(
+        "historical-import",
+        help="validate a user-supplied canonical historical export",
+    )
+    historical_import.add_argument("record_type", choices=sorted(RECORD_TYPES))
+    historical_import.add_argument("source_path", type=Path)
+    historical_import.add_argument("--output", type=Path, required=True)
+    historical_import.add_argument("--provider-name", default="user_export")
+
+    gap_report = subparsers.add_parser(
+        "data-gap-report",
+        help="emit the current machine-readable historical-data gap",
+    )
+    gap_report.add_argument("--output", type=Path)
     return parser
 
 
@@ -160,6 +229,73 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(json.dumps(result.to_dict(), indent=2))
         return 2 if result.collapsed else 0
+    if args.command == "video-price":
+        payload = json.loads(args.json_path.read_text(encoding="utf-8"))
+        thresholds = ControlledFormationThresholds(**payload.get("thresholds", {}))
+        calibration = VideoPricingCalibration(**payload.get("calibration", {}))
+        home = analyze_team_payload(payload["home"], thresholds)
+        away = analyze_team_payload(payload["away"], thresholds)
+        market = payload["market"]
+        price = price_game_from_video(
+            home,
+            away,
+            baseline_home_probability=float(payload["baseline_home_probability"]),
+            market_home_decimal_odds=float(market["home_decimal_odds"]),
+            market_away_decimal_odds=float(market["away_decimal_odds"]),
+            calibration=calibration,
+            min_conservative_edge=float(payload.get("min_conservative_edge", 0.03)),
+        )
+        output = {
+            "game": payload.get("game", "unspecified simulation"),
+            "home_formation": home.to_dict(include_frames=False),
+            "away_formation": away.to_dict(include_frames=False),
+            "price": price.to_dict(),
+        }
+        print(json.dumps(output, indent=2))
+        return 0
+    if args.command == "artifact-import":
+        report = import_artifact(
+            args.artifact_directory,
+            demo_two_possessions=args.demo_two_possessions,
+        )
+        payload = report.to_dict()
+        write_json(args.output, payload)
+        print(json.dumps(payload, indent=2))
+        return 0
+    if args.command == "artifact-verify":
+        report = verify_artifact_directory(
+            args.artifact_directory,
+            stream_telemetry=args.stream_telemetry,
+            verify_large_hashes=args.verify_large_hashes,
+        )
+        print(json.dumps(report.to_dict(), indent=2))
+        return 0 if report.passed else 2
+    if args.command == "artifact-price":
+        payload = artifact_price_report(
+            args.artifact_directory,
+            home_decimal_odds=args.home_decimal_odds,
+            away_decimal_odds=args.away_decimal_odds,
+            demo_two_possessions=args.demo_two_possessions,
+        )
+        if args.output is not None:
+            write_json(args.output, payload)
+        print(json.dumps(payload, indent=2))
+        return 0
+    if args.command == "historical-import":
+        report = import_historical_export(
+            args.source_path,
+            args.output,
+            record_type=args.record_type,
+            provider=UserExportProvider(args.provider_name),
+        )
+        print(json.dumps(report, indent=2))
+        return 0
+    if args.command == "data-gap-report":
+        payload = data_gap_report()
+        if args.output is not None:
+            write_json(args.output, payload)
+        print(json.dumps(payload, indent=2))
+        return 0
     raise AssertionError(f"unsupported command: {args.command}")
 
 

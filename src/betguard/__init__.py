@@ -35,9 +35,23 @@ from betguard.simulation import (
     save_paper_ledger,
     settle_paper_trade,
 )
+from betguard.video_pricing import (
+    ControlledFormationFrame,
+    ControlledFormationReport,
+    ControlledFormationThresholds,
+    VideoEvidence,
+    VideoGamePrice,
+    VideoPricingCalibration,
+    analyze_controlled_formation,
+    analyze_team_payload,
+    price_game_from_video,
+)
 
 __all__ = [
     "BetProposal",
+    "ControlledFormationFrame",
+    "ControlledFormationReport",
+    "ControlledFormationThresholds",
     "DesignConditioningReport",
     "FormationFit",
     "FormationSequenceReport",
@@ -49,10 +63,15 @@ __all__ = [
     "PaperOutcome",
     "PaperTrade",
     "PortfolioConditioningReport",
+    "VideoEvidence",
+    "VideoGamePrice",
+    "VideoPricingCalibration",
     "analyze_covariance",
     "analyze_design_matrix",
+    "analyze_controlled_formation",
     "analyze_formation_sequence",
     "analyze_paper_trades",
+    "analyze_team_payload",
     "add_paper_trade",
     "basketball_templates",
     "effective_number_of_bets",
@@ -62,9 +81,10 @@ __all__ = [
     "fractional_kelly_binary",
     "load_paper_ledger",
     "paper_trade_from_gate",
+    "price_game_from_video",
     "save_paper_ledger",
     "settle_paper_trade",
     "shrink_covariance",
 ]
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

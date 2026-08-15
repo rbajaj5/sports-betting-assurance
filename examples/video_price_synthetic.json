@@ -1,0 +1,62 @@
+{
+  "game": "Synthetic Comets vs Orbits",
+  "baseline_home_probability": 0.52,
+  "market": {"home_decimal_odds": 2.0, "away_decimal_odds": 2.0},
+  "min_conservative_edge": 0.03,
+  "thresholds": {
+    "min_pairwise_spacing_feet": 2.0,
+    "min_usable_frames": 3,
+    "min_possessions": 2,
+    "min_well_conditioned_fraction": 0.6,
+    "min_usable_fraction": 0.6
+  },
+  "calibration": {
+    "version": "illustrative-v1",
+    "historical_games": 0,
+    "validated": false
+  },
+  "home": {
+    "player_ids": ["H1", "H2", "H3", "H4", "H5"],
+    "impact_ratings": {"H1": 10, "H2": 9, "H3": 8, "H4": 3, "H5": 2},
+    "reference_positions": [[0, 10], [-8, 5], [8, 5], [-10, 0], [10, 0]],
+    "frames": [
+      [[0, 10], [-8, 5], [8, 5], [-10, 0], [10, 0]],
+      [[0.5, 10.2], [-7.5, 5.2], [8.5, 5.2], [-9.5, 0.2], [10.5, 0.2]],
+      [[1, 10.4], [-7, 5.4], [9, 5.4], [-9, 0.4], [11, 0.4]]
+    ],
+    "evidence": {
+      "source_uri": "synthetic://home-formation",
+      "captured_at": "2026-08-12T12:00:00Z",
+      "clip_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "rights_basis": "synthetic",
+      "annotation_method": "hand-authored example coordinates",
+      "frame_timestamps": [0, 1, 2],
+      "possession_count": 2,
+      "lineup_coverage": 1.0,
+      "court_calibration_rmse_feet": 0.1,
+      "identities_verified": true
+    }
+  },
+  "away": {
+    "player_ids": ["A1", "A2", "A3", "A4", "A5"],
+    "impact_ratings": {"A1": 6, "A2": 5, "A3": 4, "A4": 3, "A5": 2},
+    "reference_positions": [[0, 10], [-8, 5], [8, 5], [-10, 0], [10, 0]],
+    "frames": [
+      [[0, 4], [-8, 2], [8, 2], [-10, 0], [10, 0]],
+      [[0.5, 4.2], [-7.5, 2.2], [8.5, 2.2], [-9.5, 0.2], [10.5, 0.2]],
+      [[1, 4.4], [-7, 2.4], [9, 2.4], [-9, 0.4], [11, 0.4]]
+    ],
+    "evidence": {
+      "source_uri": "synthetic://away-formation",
+      "captured_at": "2026-08-12T12:00:00Z",
+      "clip_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "rights_basis": "synthetic",
+      "annotation_method": "hand-authored example coordinates",
+      "frame_timestamps": [0, 1, 2],
+      "possession_count": 2,
+      "lineup_coverage": 1.0,
+      "court_calibration_rmse_feet": 0.1,
+      "identities_verified": true
+    }
+  }
+}

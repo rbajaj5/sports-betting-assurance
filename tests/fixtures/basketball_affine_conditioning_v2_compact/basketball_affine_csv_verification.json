@@ -1,0 +1,54 @@
+{
+  "verified": true,
+  "all_csv_rows": 24576000,
+  "event_rows_selected_per_arm": 1228800,
+  "numeric_tolerance": 1e-06,
+  "results_from_csv": {
+    "tracking_and_separation": {
+      "rank_loss": {
+        "affected_frames": 134631,
+        "affected_episodes": 2928
+      },
+      "hidden_collapse": {
+        "affected_frames": 134631,
+        "affected_episodes": 2928
+      },
+      "decision_frame_counts": {
+        "accepted": 1142439,
+        "rejected": 34566,
+        "held": 51795
+      },
+      "conditioning": {
+        "mean": 0.644182161844253,
+        "median": 0.81840673089
+      },
+      "follower_rmse_feet": {
+        "mean": 0.5126818546082783,
+        "median": 0.4034975916145
+      }
+    },
+    "conditioning_aware_rta": {
+      "rank_loss": {
+        "affected_frames": 104,
+        "affected_episodes": 10
+      },
+      "hidden_collapse": {
+        "affected_frames": 104,
+        "affected_episodes": 10
+      },
+      "decision_frame_counts": {
+        "accepted": 954709,
+        "rejected": 61176,
+        "held": 212915
+      },
+      "conditioning": {
+        "mean": 0.6098089927511807,
+        "median": 0.6365577876565001
+      },
+      "follower_rmse_feet": {
+        "mean": 0.5805303472278618,
+        "median": 0.3988012224435
+      }
+    }
+  }
+}

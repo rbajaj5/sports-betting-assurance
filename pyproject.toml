@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "betguard"
-version = "0.2.0"
+version = "0.3.0"
 description = "Conditioning-aware assurance checks for sports-betting models and portfolios"
 readme = "README.md"
 requires-python = ">=3.11"
