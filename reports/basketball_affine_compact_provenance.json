@@ -1,0 +1,261 @@
+{
+  "schema_name": "betguard-native-affine-artifact",
+  "schema_version": "1.0.0",
+  "source_artifact": "tests/fixtures/basketball_affine_conditioning_v2_compact",
+  "source_simulation_version": "2.0.0",
+  "source_rights_basis": "synthetic",
+  "source_is_real_game_evidence": false,
+  "random_seed": 20260813,
+  "frame_count": 300,
+  "possession_ids": [
+    "BBAFF-E0516-POS01",
+    "BBAFF-E0516-POS02"
+  ],
+  "managed_team_id": "SYN_HOME_AURORAS",
+  "context_team_ids": [
+    "SYN_AWAY_SENTINELS"
+  ],
+  "player_rows": [
+    {
+      "player_id": "PG01",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "point_guard",
+      "impact_rating": 10.0,
+      "leader_or_follower": "L1",
+      "design_reference_position_feet": [
+        0.0,
+        33.0
+      ]
+    },
+    {
+      "player_id": "WG01",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "primary_wing",
+      "impact_rating": 8.5,
+      "leader_or_follower": "L2",
+      "design_reference_position_feet": [
+        -15.0,
+        23.0
+      ]
+    },
+    {
+      "player_id": "C01",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "center",
+      "impact_rating": 8.0,
+      "leader_or_follower": "L3",
+      "design_reference_position_feet": [
+        15.0,
+        23.0
+      ]
+    },
+    {
+      "player_id": "WG02",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "weak_side_wing",
+      "impact_rating": 6.5,
+      "leader_or_follower": "F1",
+      "design_reference_position_feet": [
+        -18.0,
+        10.0
+      ]
+    },
+    {
+      "player_id": "WG03",
+      "team_id": "SYN_HOME_AURORAS",
+      "lineup_id": "AURORAS_LU_01",
+      "role": "corner_wing",
+      "impact_rating": 6.0,
+      "leader_or_follower": "F2",
+      "design_reference_position_feet": [
+        18.0,
+        10.0
+      ]
+    },
+    {
+      "player_id": "DPG01",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "point_of_attack_defender",
+      "impact_rating": 7.8,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        0.0,
+        30.0
+      ]
+    },
+    {
+      "player_id": "DWG01",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "wing_defender",
+      "impact_rating": 7.4,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        -13.238309860229492,
+        20.567310333251953
+      ]
+    },
+    {
+      "player_id": "DC01",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "rim_defender",
+      "impact_rating": 8.2,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        13.544341087341309,
+        20.367725372314453
+      ]
+    },
+    {
+      "player_id": "DWG02",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "help_wing",
+      "impact_rating": 6.9,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        -15.290522575378418,
+        8.699681282043457
+      ]
+    },
+    {
+      "player_id": "DWG03",
+      "team_id": "SYN_AWAY_SENTINELS",
+      "lineup_id": "SENTINELS_LU_01",
+      "role": "corner_defender",
+      "impact_rating": 6.6,
+      "leader_or_follower": "context_defender",
+      "design_reference_position_feet": [
+        15.401010513305664,
+        8.50080394744873
+      ]
+    }
+  ],
+  "fixed_follower_weights": {
+    "WG02": [
+      -1.2999999523162842,
+      1.75,
+      0.550000011920929
+    ],
+    "WG03": [
+      -1.2999999523162842,
+      0.5500001311302185,
+      1.7500001192092896
+    ]
+  },
+  "comparison_arms": [
+    {
+      "controller_arm": "tracking_and_separation",
+      "managed_team_id": "SYN_HOME_AURORAS",
+      "leader_ids": [
+        "PG01",
+        "WG01",
+        "C01"
+      ],
+      "follower_ids": [
+        "WG02",
+        "WG03"
+      ],
+      "n_frames": 300,
+      "accepted_frames": 275,
+      "held_frames": 17,
+      "rejected_frames": 8,
+      "rejected_or_held_frames": 25,
+      "usable_fraction": 1.0,
+      "realized_well_conditioned_fraction": 0.79,
+      "source_median_controlled_conditioning": 0.8144866228103638,
+      "observed_median_recomputed_conditioning": 0.8129193446620271,
+      "median_follower_rmse_feet": 0.22987034858593294,
+      "follower_rmse_semantics": "compact reconstruction from observed fixed-identity rows and the last observed well-conditioned accepted map; full telemetry retains the exact source last-safe matrix and source follower RMSE",
+      "median_area_scale": 0.7027956570674092,
+      "minimum_area_scale": 0.0055788564443767855,
+      "median_spacing_feet": 10.2537459764269,
+      "minimum_spacing_feet": 2.3714965685066702,
+      "production_evidence_qualified": false,
+      "production_gate_reasons": [
+        "demo two-possession override cannot qualify a paper candidate",
+        "synthetic artifact is not verified real-game evidence"
+      ],
+      "source_semantics": "accepted/held/rejected use stored proposed-map controller decisions; geometry statistics are recomputed from realized observed coordinates"
+    },
+    {
+      "controller_arm": "conditioning_aware_rta",
+      "managed_team_id": "SYN_HOME_AURORAS",
+      "leader_ids": [
+        "PG01",
+        "WG01",
+        "C01"
+      ],
+      "follower_ids": [
+        "WG02",
+        "WG03"
+      ],
+      "n_frames": 300,
+      "accepted_frames": 209,
+      "held_frames": 76,
+      "rejected_frames": 15,
+      "rejected_or_held_frames": 91,
+      "usable_fraction": 1.0,
+      "realized_well_conditioned_fraction": 0.9666666666666667,
+      "source_median_controlled_conditioning": 0.6112103462219238,
+      "observed_median_recomputed_conditioning": 0.6241073609962071,
+      "median_follower_rmse_feet": 0.17446345193914126,
+      "follower_rmse_semantics": "compact reconstruction from observed fixed-identity rows and the last observed well-conditioned accepted map; full telemetry retains the exact source last-safe matrix and source follower RMSE",
+      "median_area_scale": 0.5323333646979762,
+      "minimum_area_scale": 0.14336247818372322,
+      "median_spacing_feet": 8.14268208963625,
+      "minimum_spacing_feet": 3.2580098558939423,
+      "production_evidence_qualified": false,
+      "production_gate_reasons": [
+        "demo two-possession override cannot qualify a paper candidate",
+        "synthetic artifact is not verified real-game evidence"
+      ],
+      "source_semantics": "accepted/held/rejected use stored proposed-map controller decisions; geometry statistics are recomputed from realized observed coordinates"
+    }
+  ],
+  "calibration": {
+    "version": "illustrative-v1",
+    "historical_games": 0,
+    "validated": false,
+    "source_qualified_paper_candidate": false
+  },
+  "paper_candidate_qualified": false,
+  "verdict": "PASS \u2014 no qualified trade.",
+  "semantic_notes": [
+    "The artifact compares two controller arms over one synthetic offense; the second team is contextual defense, not an independently weighted away formation.",
+    "Source decisions evaluate proposed affine maps. Compact coordinates are realized observations after control, so source decision counts and realized-geometry audits are intentionally reported separately.",
+    "The compact artifact has two possessions. A demo override may exercise software, but it cannot satisfy production qualification.",
+    "No player-row permutations are used."
+  ],
+  "verification": {
+    "artifact_directory": "tests/fixtures/basketball_affine_conditioning_v2_compact",
+    "compact_mode": true,
+    "telemetry_streamed": false,
+    "passed": true,
+    "simulation_version": "2.0.0",
+    "pricing_schema_version": "1.0",
+    "hash_results": {
+      "basketball_affine_conditioning_v2.mp4": "unavailable",
+      "basketball_affine_telemetry.csv": "unavailable",
+      "basketball_affine_config.json": "verified",
+      "basketball_affine_summary.json": "verified",
+      "basketball_affine_pricing_example.json": "verified",
+      "README.md": "verified",
+      "basketball_affine_csv_verification.json": "verified",
+      "analysis/run_basketball_affine_conditioning_v2_gpu.py": "unavailable"
+    },
+    "errors": [],
+    "warnings": [
+      "manifest entry is unavailable in this directory: basketball_affine_conditioning_v2.mp4",
+      "manifest entry is unavailable in this directory: basketball_affine_telemetry.csv",
+      "manifest entry is unavailable in this directory: analysis/run_basketball_affine_conditioning_v2_gpu.py"
+    ],
+    "telemetry": null
+  }
+}

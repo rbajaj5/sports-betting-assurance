@@ -16,12 +16,12 @@ map. Followers keep fixed design-time affine weights. Its comparison is between:
 - a runtime-assurance controller that separately watches normalized leader
   conditioning and holds the last well-conditioned map.
 
-In the described 4,096 matched illustrative episodes per arm, the first
-controller had 2,304 affine-rank-loss episodes, including 1,101 hidden
-collapses. The conditioning-aware arm had none under the matched command and
-disturbance parameters. These counts are supplied properties of the illustrative
-GPU experiment; this repository does not independently reproduce them, and they
-are not empirical basketball results.
+In the retained 4,096 matched illustrative episodes per arm, the source summary
+reports 2,928 rank-loss episodes for tracking-and-separation and 10 for the
+conditioning-aware arm. In both arms, the source's hidden-collapse episode
+count equals its rank-loss episode count under the registered definition. The
+native adapter independently verifies the compact files and preserves these as
+synthetic controller results, not empirical basketball results.
 
 The narrower transferable claim is structural: low formation error and nonzero
 pairwise separation do not certify affine span, localizability, or
@@ -96,3 +96,6 @@ betguard video-price examples/video_price_synthetic.json
 The JSON contains the complete provenance, player ratings, coordinates,
 thresholds, baseline model probability, two-sided market price, and calibration
 metadata. Replace the synthetic values only with auditable inputs.
+
+The native artifact adapter and its proposed-versus-realized semantics are
+documented in [artifact-adapter.md](artifact-adapter.md).

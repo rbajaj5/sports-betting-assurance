@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://betguard.example/schemas/v1/player_availability.schema.json",
+  "title": "BetGuard player availability",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "game_id", "team_id", "player_id", "status", "reason", "report_timestamp", "official_source_url", "retrieval_timestamp"],
+  "properties": {
+    "schema_version": {"const": "betguard-historical-v1"},
+    "game_id": {"type": "string", "minLength": 2},
+    "team_id": {"type": "string", "minLength": 2},
+    "player_id": {"type": "string", "minLength": 2},
+    "status": {"type": "string", "minLength": 1},
+    "reason": {"type": ["string", "null"]},
+    "report_timestamp": {"type": "string", "format": "date-time"},
+    "official_source_url": {"type": "string", "format": "uri"},
+    "retrieval_timestamp": {"type": "string", "format": "date-time"}
+  }
+}

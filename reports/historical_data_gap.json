@@ -1,0 +1,26 @@
+{
+  "schema_name": "betguard-historical-data-gap",
+  "schema_version": "1.0.0",
+  "league_scope": "WNBA",
+  "status": "UNQUALIFIED",
+  "real_games_imported": 0,
+  "qualifying_formation_games": 0,
+  "minimum_required_games": 200,
+  "licensed_market_data_available": false,
+  "permitted_tracking_or_footage_available": false,
+  "formation_coefficients_present": false,
+  "formation_coefficients_validated": false,
+  "missing_inputs": [
+    "licensed timestamped two-sided historical market prices",
+    "official pregame availability and projected-lineup records",
+    "permitted real-game coordinates or auditable footage annotations",
+    "at least 200 chronologically evaluable games passing all evidence gates"
+  ],
+  "prohibited_substitutions": [
+    "synthetic affine episodes as outcome-training data",
+    "fabricated closing lines or player coordinates",
+    "display-name-only identity joins",
+    "data obtained by bypassing access controls or licenses"
+  ],
+  "verdict": "PASS — no qualified trade."
+}

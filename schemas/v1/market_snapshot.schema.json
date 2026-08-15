@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://betguard.example/schemas/v1/market_snapshot.schema.json",
+  "title": "BetGuard regulated market snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "game_id", "operator", "operator_jurisdiction", "market_type", "side", "line", "american_odds", "decimal_odds", "observation_timestamp", "designation", "source_url", "licensed_provider_record_id", "rights_basis"],
+  "properties": {
+    "schema_version": {"const": "betguard-historical-v1"},
+    "game_id": {"type": "string", "minLength": 2},
+    "operator": {"type": "string", "minLength": 1},
+    "operator_jurisdiction": {"type": "string", "minLength": 1},
+    "market_type": {"enum": ["moneyline", "spread", "total"]},
+    "side": {"type": "string", "minLength": 1},
+    "line": {"type": ["number", "null"]},
+    "american_odds": {"type": ["integer", "null"]},
+    "decimal_odds": {"type": ["number", "null"], "exclusiveMinimum": 1},
+    "observation_timestamp": {"type": "string", "format": "date-time"},
+    "designation": {"enum": ["opening", "closing", "current"]},
+    "source_url": {"type": ["string", "null"], "format": "uri"},
+    "licensed_provider_record_id": {"type": ["string", "null"]},
+    "rights_basis": {"enum": ["user_supplied", "official_public", "licensed", "synthetic", "redacted"]}
+  },
+  "anyOf": [
+    {"required": ["american_odds"], "properties": {"american_odds": {"type": "integer"}}},
+    {"required": ["decimal_odds"], "properties": {"decimal_odds": {"type": "number"}}}
+  ]
+}

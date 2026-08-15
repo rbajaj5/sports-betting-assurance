@@ -12,4 +12,8 @@ htmlcov/
 .idea/
 .vscode/
 .DS_Store
-
+private/
+data/raw/
+*.parquet
+basketball_affine_telemetry.csv
+*.mp4
